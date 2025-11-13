@@ -196,8 +196,11 @@ export class PracticeFormPage extends BasePage {
 
   @step()
   async selectCity(city: City): Promise<void> {
-    await this.inputListCity.click();
-    await this.optionListCity(city).click();
+    await expect(async () => {
+      await this.inputListCity.click();
+      await expect(this.optionListCity(city)).toBeVisible({ timeout: 1_000 });
+      await this.optionListCity(city).click();
+    }).toPass({ timeout: 5_000 });
   }
 
   @step()
